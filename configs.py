@@ -1,5 +1,5 @@
 from dotenv import load_dotenv
-from os import path, getenv
+from os import path, getenv, mkdir
 
 
 if path.exists("local.env"):
@@ -7,16 +7,20 @@ if path.exists("local.env"):
 else:
     load_dotenv()
 
+if not path.exists("search"):
+    mkdir("search")
 
-class Config:
+
+class Configs:
     API_ID = int(getenv("API_ID", "0"))
     API_HASH = getenv("API_HASH", "abc123")
-    BOT_TOKEN = getenv("BOT_TOKEN", "1234:abcd")
+    BOT_TOKEN = getenv("BOT_TOKEN", "123:abc")
+    OWNER_ID = int(getenv("OWNER_ID", "0123"))
     SESSION = getenv("SESSION", "session")
-    OWNER_ID = int(getenv("OWNER_ID", "1952053555"))
-    SUPPORT = getenv("SUPPORT", "https://t.me/solidprojects_chat")
-    CHANNEL = getenv("CHANNEL", "https://t.me/solidprojects")
+    CHANNEL_LINK = getenv("CHANNEL_LINK", "https://t.me/solidprojects")
+    GROUP_LINK = getenv("GROUP_LINK", "https://t.me/solidprojects_chat")
     UPSTREAM_REPO = getenv("UPSTREAM_REPO", "https://github.com/DoellBarr/solidmusic")
+    AUTO_LEAVE = int(getenv("AUTO_LEAVE", "1800"))
 
 
-config = Config()
+config = Configs()

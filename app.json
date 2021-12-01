@@ -25,12 +25,12 @@
       "description": "Fill it with your assistant session string",
       "required": true
     },
-    "SUPPORT": {
+    "GROUP_LINK": {
       "description": "your group support link, can use private or public group, example https://t.me/solidprojects_chat",
       "required": false,
       "value": "https://t.me/solidprojects_chat"
     },
-    "CHANNEL": {
+    "CHANNEL_LINK": {
       "description": "your channel support link, can use private or public channel, example https://t.me/solidprojects",
       "required": false,
       "value": "https://t.me/solidprojects"
@@ -39,6 +39,11 @@
       "description": "fill it if you fork from original repo",
       "required": false,
       "value": "https://github.com/DoellBarr/solidmusic"
+    },
+    "AUTO_LEAVE": {
+      "description": "fill it with delay time for leaving group, fill 0 if you do not want to use this feature",
+      "required": false,
+      "value": "0"
     }
   },
   "buildpacks": [

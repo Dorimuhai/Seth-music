@@ -5,33 +5,36 @@ from pyrogram.types import (
     Message,
 )
 
-from base.bot_base import bot_client as bot
-from dB.lang_utils import get_message as gm
-from utils.functions.markup_buttons import start_markup
-from utils.functions.yt_utils import get_yt_details, download_yt_thumbnails
+from core.bot import Bot
+from database.lang_utils import get_message as gm
+from functions.markup_button import start_markup
+from functions.youtube_utils import get_yt_details, download_yt_thumbnails
+
+bot = Bot()
 
 
 @Client.on_message(filters.command("start"))
 async def pm_start(_, message: Message):
-    bot_username, bot_name, _ = await bot.get_my()
+    bot_username = (await bot.get_me()).username
+    bot_name = (await bot.get_me()).first_name
     chat_id = message.chat.id
     mention = message.from_user.mention
     user_id = message.from_user.id
     if message.chat.type == "private":
         if len(message.command) == 1:
             return await bot.send_message(
-                message,
+                chat_id,
                 "pm_greet",
                 format_key=str(mention),
                 markup=start_markup(chat_id, bot_username),
-                reply_message=True,
+                delete=0
             )
         if len(message.command) >= 2:
             query = message.command[1]
             if query.startswith("ytinfo_"):
                 link = query.split("ytinfo_")[1]
                 details = get_yt_details(link)
-                thumb_url = details["thumbnails"]
+                thumb_url = details["thumbnail"]
                 thumb_file = download_yt_thumbnails(thumb_url, user_id)
                 result_text = f"""
 {gm(chat_id, 'track_info')}
@@ -69,12 +72,12 @@ async def pm_start(_, message: Message):
                             [
                                 InlineKeyboardButton(
                                     f"{gm(chat_id, 'commands')}",
-                                    url="https://telegra.ph/The-Bot-Command-11-14"
+                                    url="https://telegra.ph/The-Bot-Command-11-14",
                                 )
                             ]
                         ]
                     ),
-                    disable_web_page_preview=True
+                    disable_web_page_preview=True,
                 )
     if message.chat.type in ["group", "supergroup"]:
         await message.reply(
@@ -93,20 +96,7 @@ async def pm_start(_, message: Message):
         )
 
 
-@Client.on_message(filters.command("help"))
-async def help_cmds_(_, message: Message):
-    chat_id = message.chat.id
-    return await message.reply(
-        gm(chat_id, "helpmusic"),
-        reply_markup=InlineKeyboardMarkup(
-            [
-                [
-                    InlineKeyboardButton(
-                        f"{gm(chat_id, 'commands')}",
-                        url="https://telegra.ph/The-Bot-Command-11-14"
-                    )
-                ]
-            ]
-        ),
-        disable_web_page_preview=True
-    )
+__cmds__ = ["start"]
+__help__ = {
+    "start": "help_start"
+}
