@@ -1,8 +1,8 @@
 {
-  "name": "SolidMusic Bot",
+  "name": "SethMusic Bot",
   "description": "Open Source bot to stream media trough Telegram Voice Chat. Powered by PyTgCalls and Pyrogram",
   "keywords": ["solidmusic", "musicbot", "video-stream", "videochat", "voicechat", "telegram"],
-  "repository": "https://github.com/DoellBarr/solidmusic",
+  "repository": "https://github.com/Dorimuhai/Seth-music",
   "stack": "container",
   "env": {
     "API_ID": {
